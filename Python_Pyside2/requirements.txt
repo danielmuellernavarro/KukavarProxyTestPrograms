@@ -1,0 +1,2 @@
+py_openshowvar==1.1.5
+PySide2==5.12.2
