@@ -1,0 +1,31 @@
+<div class="m-portlet__body">
+  <table class="table table-striped- table-bordered table-hover table-checkable" id="m_table_1">
+    <thead>
+      {% include 'read_write_variable/project/datatable_head_foot.html' %}
+    </thead>
+    <tbody>
+      {% for variable in variables %}
+        <tr>
+          <td>{{ variable.description }}</td>
+          <td>{{ variable.value }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+    <tfoot>
+      {% include 'read_write_variable/project/datatable_head_foot.html' %}
+    </tfoot>
+   </table>
+ </div>
+
+<div class="kt-space-20"></div>
+<form method="post" id="post_auto_refresh_table">
+  {% csrf_token %}
+  <button class="btn btn-brand kt-spinner kt-spinner--right kt-spinner--sm"
+    id="id_button_auto_refresh_table">
+    Auto refresh &nbsp;&nbsp;
+  </button>
+</form>
+
+{% if nbar != 0 %}
+  {% include 'read_write_variable/project/update_table_js.html' %}
+{% endif %}

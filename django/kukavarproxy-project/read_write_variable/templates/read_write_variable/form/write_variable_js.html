@@ -1,0 +1,34 @@
+{% load static %}
+<script>
+  // Submit post on submit
+  $('#post_write_variable_form').on('submit', function(event){
+      event.preventDefault();
+      $('#id_button_write').prop('disabled', true);
+      post_write_variable_form();
+  });
+  // AJAX for posting
+  function post_write_variable_form() {
+      $.ajax({
+          url : "/ajax/write_variable/{{nbar}}", // the endpoint
+          type : "POST", // http method
+          data : {
+              IP : $('#id_form_state-IP').val(),
+              variable : $('#id_form_write-variable').val(),
+              value : $('#id_form_write-value').val(),
+              }, // data sent with the post request
+
+          // handle a successful response
+          success : function(json) {
+              $('#id_button_write').prop('disabled', false);
+              $('#id_form_write-result').val(json.result); // remove the value from the input
+          },
+
+          // handle a non-successful response
+          error : function(xhr,errmsg,err) {
+              $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+                  " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+              console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+          }
+      });
+  };
+</script>

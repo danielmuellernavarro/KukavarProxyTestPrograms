@@ -1,0 +1,87 @@
+{% load static %}
+{% load widget_tweaks %}
+{% if nbar == 0 %}
+<div class="col-xl-4">
+{% else %}
+<div class="col-xl-6">
+{% endif %}
+  <!--begin::Portlet-->
+  <div class="kt-portlet">
+    <div class="kt-portlet__head">
+      <div class="kt-portlet__head-label">
+        <h3 class="kt-portlet__head-title">
+          Read Variable
+        </h3>
+      </div>
+    </div>
+
+    <!--begin::Form-->
+    <div class="kt-portlet__body">
+      <form method="post" id="post_read_variable_form">
+        {% csrf_token %}
+
+        {% for hidden_field in read_form.hidden_fields %}
+          {{ hidden_field }}
+        {% endfor %}
+
+        {% if read_form.non_field_errors %}
+          <div class="alert alert-danger" role="alert">
+            {% for error in read_form.non_field_errors %}
+              {{ error }}
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        {% for field in read_form.visible_fields %}
+          <div class="form-group">
+            {{ field.label_tag }}
+
+            {% if read_form.is_bound %}
+              {% if field.errors %}
+                {% render_field field class="form-control is-invalid" %}
+                {% for error in field.errors %}
+                  <div class="invalid-feedback">
+                    {{ error }}
+                  </div>
+                {% endfor %}
+              {% else %}
+                {% render_field field class="form-control is-valid" %}
+              {% endif %}
+            {% else %}
+              {% render_field field class="form-control" %}
+            {% endif %}
+
+            {% if field.help_text %}
+              <small class="form-text text-muted">{{ field.help_text }}</small>
+            {% endif %}
+          </div>
+        {% endfor %}
+        <button type="submit" id="id_button_read" value="Post" class="btn btn-primary">Read</button>
+      </form>
+      <div class="kt-space-20"></div>
+      <form method="post" id="post_auto_refresh">
+        {% csrf_token %}
+        <button class="btn btn-brand kt-spinner kt-spinner--right kt-spinner--sm"
+          id="id_button_auto_refresh">
+          Auto refresh &nbsp;&nbsp;
+        </button>
+      </form>
+      <div class="kt-space-20"></div>
+      {% if nbar != 0 %}
+      <form method="post" id="post_add">
+        {% csrf_token %}
+        <button class="btn btn-brand kt-spinner kt-spinner--right kt-spinner--sm"
+          id="id_button_add">
+          Add
+        </button>
+      </form>
+      {% endif %}
+    </div>
+
+    <!--end::Form-->
+  </div>
+
+  <!--end::Portlet-->
+</div>
+
+{% include 'read_write_variable/form/read_variable_js.html' %}

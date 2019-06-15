@@ -1,0 +1,117 @@
+{% load static %}
+<script>
+
+var interval_refresh = 500 // ms.
+
+var buttom_auto_refresh = document.getElementById("id_button_auto_refresh").className;
+var property_auto_refresh = " kt-spinner--light"
+
+// Submit post on submit
+$('#post_read_variable_form').on('submit', function(event){
+    var interval_refresh = 500 // ms.
+
+    var buttom_auto_refresh = document.getElementById("id_button_auto_refresh").className;
+    var property_auto_refresh = " kt-spinner--light"
+
+    event.preventDefault();
+    $('#id_button_read').prop('disabled', true);
+    post_read_variable_form();
+});
+// AJAX for posting
+function post_read_variable_form() {
+    $.ajax({
+      url : "/ajax/read_variable/{{nbar}}", // the endpoint
+      type : "POST", // http method
+      data : {
+          variable : $('#id_form_read-variable').val(),
+          IP : $('#id_form_state-IP').val(),
+          }, // data sent with the post request
+
+      // handle a successful response
+      success : function(json) {
+          $('#id_form_read-result').val(json.result); // remove the value from the input
+          if (!buttom_auto_refresh.includes(property_auto_refresh)) {
+            $('#id_button_read').prop('disabled', false);
+          }
+      },
+
+      // handle a non-successful response
+      error : function(xhr,errmsg,err) {
+          $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+              " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+          console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+      },
+
+      complete: function(json) {
+        if (buttom_auto_refresh.includes(property_auto_refresh)) {
+          setTimeout(post_read_variable_form, interval_refresh);
+        }
+      }
+  });
+}
+
+// Submit post on submit
+$('#post_add').on('submit', function(event){
+    event.preventDefault();
+    $('#id_button_add').prop('disabled', true);
+    post_add_form();
+});
+
+// AJAX for posting
+function post_add_form() {
+    $.ajax({
+      url : "/ajax/add/{{nbar}}", // the endpoint
+      type : "POST", // http method
+      data : {
+          variable : $('#id_form_read-variable').val(),
+          }, // data sent with the post request
+
+      // handle a successful response
+      success : function(json) {
+          $('#id_button_add').prop('disabled', false);
+      },
+
+      // handle a non-successful response
+      error : function(xhr,errmsg,err) {
+          $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+              " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+          console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+      },
+
+      complete: function(json) {
+        var buttom_auto_refresh = document.getElementById("id_button_auto_refresh_table").className;
+        var property_auto_refresh = " kt-spinner--light"
+        if (!buttom_auto_refresh.includes(property_auto_refresh)) {
+          post_update_table()
+        }
+      }
+  });
+}
+
+// Submit post on submit
+$('#post_auto_refresh').on('submit', function(event){
+    var interval_refresh = 500 // ms.
+
+    var buttom_auto_refresh = document.getElementById("id_button_auto_refresh").className;
+    var property_auto_refresh = " kt-spinner--light"
+    event.preventDefault();
+    post_auto_refresh();
+});
+function post_auto_refresh() {
+    // toggle button
+    if (buttom_auto_refresh.includes(property_auto_refresh)) {
+      buttom_auto_refresh = buttom_auto_refresh.replace(property_auto_refresh, "")
+      $('#id_button_read').prop('disabled', false);
+    }
+    else {
+      buttom_auto_refresh += property_auto_refresh;
+      $('#id_button_read').prop('disabled', true);
+    }
+    // auto refresh
+    if (buttom_auto_refresh.includes(property_auto_refresh)) {
+      post_read_variable_form()
+    }
+
+    document.getElementById("id_button_auto_refresh").className = buttom_auto_refresh
+};
+</script>

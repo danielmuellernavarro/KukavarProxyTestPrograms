@@ -1,0 +1,71 @@
+{% load static %}
+{% load widget_tweaks %}
+{% if nbar == 0 %}
+<div class="col-xl-4">
+{% else %}
+<div class="col-xl-6">
+{% endif %}
+  <!--begin::Portlet-->
+  <div class="kt-portlet">
+    <div class="kt-portlet__head">
+      <div class="kt-portlet__head-label">
+        <h3 class="kt-portlet__head-title">
+          Write Variable
+        </h3>
+      </div>
+    </div>
+
+    <!--begin::Form-->
+    <div class="kt-portlet__body">
+      <form method="post" id="post_write_variable_form">
+        {% csrf_token %}
+
+        {% for hidden_field in write_form.hidden_fields %}
+          {{ hidden_field }}
+        {% endfor %}
+
+        {% if write_form.non_field_errors %}
+          <div class="alert alert-danger" role="alert">
+            {% for error in write_form.non_field_errors %}
+              {{ error }}
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        {% for field in write_form.visible_fields %}
+          <div class="form-group">
+            {{ field.label_tag }}
+
+            {% if write_form.is_bound %}
+              {% if field.errors %}
+                {% render_field field class="form-control is-invalid" %}
+                {% for error in field.errors %}
+                  <div class="invalid-feedback">
+                    {{ error }}
+                  </div>
+                {% endfor %}
+              {% else %}
+                {% render_field field class="form-control is-valid" %}
+              {% endif %}
+            {% else %}
+              {% render_field field class="form-control" %}
+            {% endif %}
+
+            {% if field.help_text %}
+              <small class="form-text text-muted">{{ field.help_text }}</small>
+            {% endif %}
+          </div>
+        {% endfor %}
+
+        <button type="submit" id="id_button_write" value="Post" class="btn btn-primary">Write</button>
+      </form>
+    </div>
+
+
+    <!--end::Form-->
+  </div>
+
+  <!--end::Portlet-->
+</div>
+
+{% include 'read_write_variable/form/write_variable_js.html' %}

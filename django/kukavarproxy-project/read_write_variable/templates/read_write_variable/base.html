@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+	<head>
+		{% include 'read_write_variable/header.html' %}
+	</head>
+	<body class="kt-header--fixed kt-header-mobile--fixed kt-subheader--fixed kt-subheader--enabled kt-subheader--solid kt-aside--enabled kt-aside--fixed kt-page--loading">
+		{% include 'read_write_variable/js.html' %}
+		{% include 'read_write_variable/css.html' %}
+		{% include 'read_write_variable/header_mobile.html' %}
+
+		<div class="kt-grid kt-grid--hor kt-grid--root">
+			<div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver kt-page">
+				{% include 'read_write_variable/nav_aside.html' %}
+				{% block content %} {% endblock %}
+			</div>
+		</div>
+		{% include 'read_write_variable/scrolltop.html' %}
+	</body>
+</html>

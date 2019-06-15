@@ -1,0 +1,79 @@
+{% load static %}
+<script>
+
+var interval_refresh_table = 1000 // ms.
+
+var buttom_auto_refresh_table = document.getElementById("id_button_auto_refresh_table").className;
+var property_auto_refresh_table = " kt-spinner--light"
+
+// Submit post on submit
+$('#post_auto_refresh_table').on('submit', function(event){
+    var interval_refresh_table = 1000 // ms.
+
+    var buttom_auto_refresh_table = document.getElementById("id_button_auto_refresh_table").className;
+    var property_auto_refresh_table = " kt-spinner--light"
+    event.preventDefault();
+    post_auto_refresh_table();
+});
+function post_auto_refresh_table() {
+    // toggle button
+    if (buttom_auto_refresh_table.includes(property_auto_refresh_table)) {
+      buttom_auto_refresh_table = buttom_auto_refresh_table.replace(property_auto_refresh_table, "")
+    }
+    else {
+      buttom_auto_refresh_table += property_auto_refresh_table;
+    }
+    // auto refresh
+    if (buttom_auto_refresh_table.includes(property_auto_refresh_table)) {
+      post_update_table()
+    }
+    document.getElementById("id_button_auto_refresh_table").className = buttom_auto_refresh_table
+};
+
+
+function post_update_table() {
+    //do your AJAX stuff here
+    $.ajax({
+        type : "GET", // http method
+        url : "/ajax/refresh_table/{{nbar}}", // the endpoint
+        data : {
+            IP : $('#id_form_state-IP').val(),
+            variable : $('#id_form_write-variable').val(),
+            value : $('#id_form_write-value').val(),
+            }, // data sent with the post request
+
+        // handle a successful response
+        success : function(data) {
+          var keyOfobj = Object.keys(data);
+          var ValOfObj = Object.values(data);
+          var tr;
+          $('#m_table_1 tbody').html("");
+          for (var i = 0; i < keyOfobj.length; i++) {
+              tr = $('<tr/>');
+              // tr.append("<td>" + ValOfObj[i].name + "</td>");
+              tr.append("<td>" + ValOfObj[i].description + "</td>");
+              tr.append("<td>" + ValOfObj[i].value + "</td>");
+               $('#m_table_1 tbody').append(tr);
+          }
+          var $label = $("#m_table_1_info");
+          len = keyOfobj.length;
+          var text = "Showing 1 to " + len.toString() + " of " + len.toString() + " entries";
+          $label.text(text)
+        },
+
+        // handle a non-successful response
+        error : function(xhr,errmsg,err) {
+            $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+                " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        },
+
+        complete: function(data) {
+          if (buttom_auto_refresh_table.includes(property_auto_refresh_table)) {
+            setTimeout(post_update_table, interval_refresh_table);
+          }
+        }
+    });
+}
+
+</script>

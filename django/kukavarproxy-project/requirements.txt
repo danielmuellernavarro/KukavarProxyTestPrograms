@@ -1,0 +1,6 @@
+Django==2.2.1
+django-debug-toolbar==1.11
+django-widget-tweaks==1.4.3
+py-openshowvar==1.1.5
+pytz==2019.1
+sqlparse==0.3.0

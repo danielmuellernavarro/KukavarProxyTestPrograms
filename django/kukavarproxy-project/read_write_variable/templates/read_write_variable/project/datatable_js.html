@@ -1,0 +1,43 @@
+<script>
+var DatatablesExtensionButtons = function() {
+
+	var initTable1 = function() {
+
+    var file_name = "Variable";
+
+		// begin first table
+		var table = $('#m_table_1').DataTable({
+			responsive: true,
+			ordering: false,
+			searching: false,
+			paging: false,
+      // "iDisplayLength": 100,
+			//== Pagination settings
+			dom: `<'row'<'col-sm-6 text-left'f><'col-sm-6 text-right'B>>
+			<'row'<'col-sm-12'tr>>
+			<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
+
+			buttons: [
+        { extend: 'print', title : file_name },
+        { extend: 'copyHtml5', title : file_name},
+        { extend: 'excelHtml5', title : file_name},
+				//'csvHtml5',
+        { extend: 'pdfHtml5', title : file_name},
+			],
+		});
+
+	};
+
+	return {
+		init: function() {
+			initTable1();
+		},
+
+	};
+
+}();
+
+jQuery(document).ready(function() {
+	DatatablesExtensionButtons.init();
+});
+</script>

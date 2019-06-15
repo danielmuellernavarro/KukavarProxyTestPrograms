@@ -1,0 +1,30 @@
+{% extends 'read_write_variable/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- end:: Aside -->
+<div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-wrapper" id="kt_wrapper">
+{% include 'read_write_variable/home_header.html' %}
+
+	<!-- begin:: Content -->
+	<div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
+		{% include 'read_write_variable/home_subheader_phone.html' %}
+
+		<!-- begin:: Content -->
+		<div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content">
+			<div class="row">
+				{% include 'read_write_variable/form/state.html' %}
+				{% include 'read_write_variable/form/read_variable.html' %}
+				{% include 'read_write_variable/form/write_variable.html' %}
+			</div>
+		</div>
+
+		<!-- end:: Content -->
+	</div>
+
+	{% include 'read_write_variable/header_content.html' %}
+	{% include 'read_write_variable/footer.html' %}
+</div>
+
+{% endblock %}
