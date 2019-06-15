@@ -3,7 +3,7 @@
 # Form implementation generated from reading ui file 'MainWindow.ui',
 # licensing of 'MainWindow.ui' applies.
 #
-# Created: Sun Mar 24 01:43:20 2019
+# Created: Fri Apr 19 15:18:05 2019
 #      by: pyside2-uic  running on PySide2 5.12.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -107,10 +107,11 @@ class Ui_MainWindow(object):
         MainWindow.setTabOrder(self.InputIp, self.ButtonIp)
         MainWindow.setTabOrder(self.ButtonIp, self.InputRead)
         MainWindow.setTabOrder(self.InputRead, self.ButtonRead)
-        MainWindow.setTabOrder(self.ButtonRead, self.InputValue)
+        MainWindow.setTabOrder(self.ButtonRead, self.InputWrite)
+        MainWindow.setTabOrder(self.InputWrite, self.InputValue)
         MainWindow.setTabOrder(self.InputValue, self.ButtonWrite)
-        MainWindow.setTabOrder(self.ButtonWrite, self.InputWrite)
-        MainWindow.setTabOrder(self.InputWrite, self.TextReadResult)
+        MainWindow.setTabOrder(self.ButtonWrite, self.TextStatus)
+        MainWindow.setTabOrder(self.TextStatus, self.TextReadResult)
         MainWindow.setTabOrder(self.TextReadResult, self.TextWriteResult)
 
     def retranslateUi(self, MainWindow):

@@ -225,9 +225,10 @@
   <tabstop>ButtonIp</tabstop>
   <tabstop>InputRead</tabstop>
   <tabstop>ButtonRead</tabstop>
+  <tabstop>InputWrite</tabstop>
   <tabstop>InputValue</tabstop>
   <tabstop>ButtonWrite</tabstop>
-  <tabstop>InputWrite</tabstop>
+  <tabstop>TextStatus</tabstop>
   <tabstop>TextReadResult</tabstop>
   <tabstop>TextWriteResult</tabstop>
  </tabstops>
